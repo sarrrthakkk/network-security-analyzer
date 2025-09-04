@@ -1,0 +1,66 @@
+# Network Security Analyzer - Python Dependencies
+# Spring 2024 Security Software Development
+
+# Core networking and packet analysis
+scapy>=2.5.0
+pypcap>=1.2.3
+dpkt>=1.9.8
+
+# Data analysis and machine learning
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.10.0
+
+# Visualization and reporting
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+jinja2>=3.1.0
+
+# Web framework and API
+flask>=2.3.0
+flask-cors>=4.0.0
+requests>=2.31.0
+
+# Database and storage
+sqlite3
+pymongo>=4.4.0
+redis>=4.6.0
+
+# Security and cryptography
+cryptography>=41.0.0
+pycryptodome>=3.18.0
+hashlib
+hmac
+
+# System and utilities
+psutil>=5.9.0
+netifaces>=0.11.0
+python-nmap>=0.7.1
+paramiko>=3.3.0
+
+# Logging and monitoring
+loguru>=0.7.0
+prometheus-client>=0.17.0
+
+# Testing and development
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+
+# Performance and optimization
+numba>=0.57.0
+cython>=3.0.0
+
+# Additional security tools
+yara-python>=4.3.0
+pefile>=2023.2.7
+virustotal-api>=1.1.11
+
