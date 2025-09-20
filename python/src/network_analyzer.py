@@ -412,7 +412,29 @@ def main():
     """Main function for command-line usage."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Network Security Analyzer")
+    parser = argparse.ArgumentParser(
+        description="Network Security Analyzer",
+        epilog="""
+Examples:
+  # Basic monitoring (60 seconds with report)
+  sudo python3 network_analyzer.py -i en0 -t 60 -o security_report.html -v
+  
+  # Continuous monitoring (until Ctrl+C)
+  sudo python3 network_analyzer.py -i en0 -t 0 -v
+  
+  # Monitor HTTP/HTTPS traffic only
+  sudo python3 network_analyzer.py -i en0 -f "port 80 or port 443" -t 300 -v
+  
+  # Use pre-built scenarios
+  sudo python3 real_world_examples.py --example 1
+  
+Quick Help:
+  python3 demo.py                    # Safe demo (no root needed)
+  python3 -c "from utils import NetworkUtils; print(NetworkUtils.get_available_interfaces())"  # List interfaces
+  open ../HELP_COMMANDS.md            # Full command reference
+        """,
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("-i", "--interface", default="auto", help="Network interface")
     parser.add_argument("-f", "--filter", default="", help="BPF filter")
     parser.add_argument("-t", "--timeout", type=int, default=60, help="Capture timeout (seconds)")

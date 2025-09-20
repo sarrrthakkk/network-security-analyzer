@@ -151,39 +151,56 @@ class ThreatDetector:
             '.js', '.jar', '.msi', '.ps1', '.sh', '.pl', '.py', '.rb'
         ]
     
-    def process_packet(self, packet, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Process a packet and detect threats."""
-        threats = []
-        
+    def initialize(self, config) -> None:
+        """Initialize detector with configuration from the analyzer."""
         try:
+            self.config = config
+            if hasattr(config, 'threat_threshold'):
+                self.threat_threshold = config.threat_threshold
+            if hasattr(config, 'verbose') and config.verbose:
+                self.logger.setLevel(logging.DEBUG)
+            # Optional feature toggles if present on config
+            self.http_threat_detection_enabled = getattr(config, 'http_detection', True)
+        except Exception as e:
+            self.logger.error(f"Failed to initialize ThreatDetector: {e}")
+
+    def process_packet(self, packet, analysis: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+        """Process a packet and detect threats.
+        Accepts optional precomputed analysis; if missing, performs payload-only checks.
+        """
+        threats = []
+
+        try:
+            analysis = analysis or {}
+
             # Extract basic packet info
             source_ip = analysis.get('source_ip', 'Unknown')
             dest_ip = analysis.get('dest_ip', 'Unknown')
             protocol = analysis.get('protocol', 'Unknown')
             dest_port = analysis.get('dest_port')
-            
+
             # Skip whitelisted IPs
             if source_ip in self.whitelisted_ips:
                 return threats
-            
-            # Update detection state
+
+            # Update detection state (requires minimal fields, safe with defaults)
             self._update_detection_state(packet, analysis)
-            
+
             # Run threat detection methods
             threats.extend(self._detect_ddos_attack(packet, analysis))
             threats.extend(self._detect_port_scan(packet, analysis))
             threats.extend(self._detect_malware_traffic(packet, analysis))
             threats.extend(self._detect_data_exfiltration(packet, analysis))
             threats.extend(self._detect_http_threats(packet, analysis))
-            
+
             # Add threats to the list
             for threat in threats:
                 self.threats.append(threat)
                 self.threat_counts[threat['type']] += 1
-            
+
         except Exception as e:
             self.logger.error(f"Error processing packet for threat detection: {e}")
-        
+
         return threats
     
     def _detect_http_threats(self, packet, analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
