@@ -12,7 +12,7 @@ A comprehensive guide for using the Network Security Analyzer with enhanced HTTP
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/network-security-analyzer.git
+git clone https://github.com/sarrrthakkk/network-security-analyzer.git
 cd network-security-analyzer
 
 # Install Python dependencies
@@ -22,6 +22,240 @@ pip install -r requirements.txt
 # Test the installation
 python3 demo.py
 ```
+
+## 📋 Help Commands - Quick Reference
+
+### 🆘 Getting Help
+```bash
+# Show all available commands and options
+python3 src/network_analyzer.py --help
+
+# Show C++ usage guide (interactive menu)
+./cpp_usage_guide.sh
+
+# Run demo without root (safe test)
+python3 demo.py
+
+# List available network interfaces
+python3 -c "from src.utils import NetworkUtils; print(NetworkUtils.get_available_interfaces())"
+```
+
+### 🚀 Essential Commands
+
+#### **Python (Recommended)**
+```bash
+# Basic monitoring (60 seconds, generates report)
+sudo python3 src/network_analyzer.py -i en0 -t 60 -o security_report.html -v
+
+# Continuous monitoring (until Ctrl+C)
+sudo python3 src/network_analyzer.py -i en0 -t 0 -v
+
+# Monitor specific traffic (HTTP/HTTPS only)
+sudo python3 src/network_analyzer.py -i en0 -f "port 80 or port 443" -t 300 -v
+
+# Use pre-built scenarios
+sudo python3 real_world_examples.py --example 1  # Basic monitoring
+sudo python3 real_world_examples.py --example 2  # DDoS detection
+sudo python3 real_world_examples.py --example 3  # Port scan detection
+sudo python3 real_world_examples.py --example 4  # Continuous monitoring
+sudo python3 real_world_examples.py --example 5  # Custom filtering
+```
+
+#### **C++ Alternative**
+```bash
+# Build and run
+cd cpp
+make
+sudo ./bin/network_analyzer
+
+# Interactive guide with examples
+./cpp_usage_guide.sh
+```
+
+### 🔧 Troubleshooting Commands
+
+#### **Permission Issues**
+```bash
+# Always use sudo for packet capture
+sudo python3 src/network_analyzer.py -i en0 -t 30
+
+# Check if you have packet capture permissions
+sudo python3 -c "import scapy; print('Packet capture available')"
+```
+
+#### **Interface Issues**
+```bash
+# Find your network interface
+ifconfig | grep -E "^[a-z]|inet "
+
+# List interfaces programmatically
+python3 -c "from src.utils import NetworkUtils; print(NetworkUtils.get_available_interfaces())"
+
+# Common interfaces:
+# macOS: en0, en1, en2
+# Linux: eth0, wlan0, ens33
+# Windows: Ethernet, Wi-Fi
+```
+
+#### **Dependency Issues**
+```bash
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Install C++ dependencies (macOS)
+brew install libpcap openssl
+
+# Install C++ dependencies (Ubuntu/Debian)
+sudo apt-get install libpcap-dev libssl-dev
+
+# Test installation
+python3 demo.py
+```
+
+### 📊 Output and Reports
+
+#### **View Results**
+```bash
+# Open generated HTML report
+open security_report.html
+
+# View in terminal
+cat security_report.html
+
+# Export data as JSON
+python3 -c "
+from src.network_analyzer import NetworkAnalyzer, AnalysisConfig
+analyzer = NetworkAnalyzer()
+analyzer.initialize(AnalysisConfig(interface='en0', timeout=10))
+analyzer.start_monitoring()
+analyzer.export_data('analysis_data.json')
+"
+```
+
+#### **Monitor in Real-time**
+```bash
+# Watch live output with timestamps
+sudo python3 src/network_analyzer.py -i en0 -t 0 -v | while read line; do echo "$(date): $line"; done
+
+# Save live output to file
+sudo python3 src/network_analyzer.py -i en0 -t 0 -v > live_monitor.log 2>&1 &
+tail -f live_monitor.log
+```
+
+### 🎯 Common Use Cases
+
+#### **Web Application Security**
+```bash
+# Monitor web traffic for attacks
+sudo python3 src/network_analyzer.py -i en0 -f "port 80 or port 443" -t 3600 -o web_security_report.html -v
+```
+
+#### **DDoS Detection**
+```bash
+# Monitor for DDoS attacks
+sudo python3 real_world_examples.py --example 2
+```
+
+#### **Port Scan Detection**
+```bash
+# Detect port scanning
+sudo python3 real_world_examples.py --example 3
+```
+
+#### **Custom Analysis**
+```bash
+# Monitor specific IP range
+sudo python3 src/network_analyzer.py -i en0 -f "net 192.168.1.0/24" -t 300 -v
+
+# Monitor specific protocol
+sudo python3 src/network_analyzer.py -i en0 -f "tcp" -t 300 -v
+```
+
+### 🔍 Advanced Usage
+
+#### **Programmatic Usage**
+```python
+from src.network_analyzer import NetworkAnalyzer, AnalysisConfig
+
+# Create configuration
+config = AnalysisConfig(
+    interface="en0",
+    timeout=60,
+    filter="tcp port 80 or tcp port 443",
+    anomaly_threshold=2.0,
+    threat_threshold=0.8,
+    verbose=True
+)
+
+# Initialize and run
+analyzer = NetworkAnalyzer()
+analyzer.initialize(config)
+analyzer.start_monitoring()
+
+# Get results
+status = analyzer.get_status()
+print(f"Captured {status['packets_processed']} packets")
+
+# Generate report
+analyzer.generate_report("custom_report.html")
+```
+
+#### **Batch Processing**
+```bash
+# Run multiple analysis sessions
+for i in {1..5}; do
+    echo "Running session $i..."
+    sudo python3 src/network_analyzer.py -i en0 -t 60 -o "report_$i.html"
+    sleep 10
+done
+```
+
+### 📚 Additional Resources
+
+#### **Documentation**
+```bash
+# Read comprehensive usage guide
+open docs/REAL_WORLD_USAGE.md
+
+# Read implementation details
+open docs/IMPLEMENTATION_DETAILS.md
+
+# Read this file
+open docs/HOW_TO_USE.md
+```
+
+#### **Examples and Tests**
+```bash
+# Run all examples
+python3 real_world_examples.py --example 1
+python3 real_world_examples.py --example 2
+python3 real_world_examples.py --example 3
+python3 real_world_examples.py --example 4
+python3 real_world_examples.py --example 5
+
+# Run build tests
+./test_build.sh
+
+# Run C++ examples
+./cpp_usage_guide.sh
+```
+
+### ⚠️ Important Notes
+
+1. **Always use sudo** for packet capture
+2. **Replace en0** with your actual network interface
+3. **Check permissions** before running
+4. **Monitor disk space** for large captures
+5. **Respect privacy** and legal requirements
+6. **Use appropriate filters** to reduce noise
+
+### 🆘 Still Need Help?
+
+1. **Check the demo**: `python3 demo.py`
+2. **Run tests**: `./test_build.sh`
+3. **Read docs**: `docs/REAL_WORLD_USAGE.md`
+4. **Try examples**: `python3 real_world_examples.py --example 1`
+5. **Use help flag**: `python3 src/network_analyzer.py --help`
 ## 📋 Basic Usage
 
 ### Python Version (Recommended)

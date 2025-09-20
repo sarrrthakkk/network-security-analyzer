@@ -33,11 +33,11 @@ setup(
     description="Advanced network packet analysis and security monitoring tool",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    url="https://github.com/example/network-security-analyzer",
+    url="https://github.com/sarrrthakkk/network-security-analyzer",
     project_urls={
-        "Bug Tracker": "https://github.com/example/network-security-analyzer/issues",
-        "Documentation": "https://github.com/example/network-security-analyzer/docs",
-        "Source Code": "https://github.com/example/network-security-analyzer",
+        "Bug Tracker": "https://github.com/sarrrthakkk/network-security-analyzer/issues",
+        "Documentation": "https://github.com/sarrrthakkk/network-security-analyzer/docs",
+        "Source Code": "https://github.com/sarrrthakkk/network-security-analyzer",
     },
     classifiers=[
         "Development Status :: 4 - Beta",

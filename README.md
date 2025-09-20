@@ -89,7 +89,7 @@ network-security-analyzer/
 ### **Quick Start**
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/network-security-analyzer.git
+git clone https://github.com/sarrrthakkk/network-security-analyzer.git
 cd network-security-analyzer
 
 # Run the build test
@@ -242,6 +242,7 @@ make test
 
 ## 📚 Documentation
 
+- **[HELP_COMMANDS.md](HELP_COMMANDS.md)**: 🆘 **Quick reference for all commands and troubleshooting**
 - **[REAL_WORLD_USAGE.md](REAL_WORLD_USAGE.md)**: Comprehensive usage guide with real-world scenarios
 - **[HOW_TO_USE.md](HOW_TO_USE.md)**: Step-by-step how-to guide
 - **[docs/IMPLEMENTATION_DETAILS.md](docs/IMPLEMENTATION_DETAILS.md)**: Technical implementation details
